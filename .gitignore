@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Secret ###
+database.properties
+
 ### STS ###
 .apt_generated
 .classpath
