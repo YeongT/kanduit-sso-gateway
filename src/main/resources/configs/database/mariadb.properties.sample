@@ -1,0 +1,28 @@
+# MariaDB 데이터베이스 설정
+spring.datasource.url=jdbc:mariadb://<mariadb-host>:<port>/<database>
+spring.datasource.username=<username>
+spring.datasource.password=<password>
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+# JPA 및 Hibernate 설정
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.use_sql_comments=true
+# Hibernate Dialect 설정 (MariaDB 버전에 맞는 Dialect를 사용하세요)
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDBDialect
+# Hibernate JDBC Batch 처리
+spring.jpa.properties.hibernate.jdbc.batch_size=50
+spring.jpa.properties.hibernate.order_inserts=true
+spring.jpa.properties.hibernate.order_updates=true
+# HikariCP 설정
+spring.datasource.hikari.connection-timeout=5000
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.idle-timeout=600000
+spring.datasource.hikari.max-lifetime=1800000
+# 캐시 설정
+spring.jpa.properties.hibernate.cache.use_second_level_cache=false
+spring.jpa.properties.hibernate.cache.use_query_cache=false
+# 로깅 설정
+logging.level.org.hibernate=ERROR
+logging.level.org.springframework=ERROR

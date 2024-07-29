@@ -12,7 +12,7 @@ it will be deployed to the servers listed below.
 
 ## API Documentation
 
-You can find document page from [`here`](https://api.kanduit.tech/docs) (under construnction)
+You can find document page from [`here`](https://api.kanduit.tech/docs) (under construction)
 
 ## Contribution
 
@@ -34,4 +34,7 @@ If you find any **bugs**, **security issues**, or have any **suggestions for imp
       │         └─sso
       │             └─KanduitSsoGatewayApplication
       └─resources
+        │   └─configs
+        │       └─database
+        │           └─mariadb.properties
         └─application.properties
