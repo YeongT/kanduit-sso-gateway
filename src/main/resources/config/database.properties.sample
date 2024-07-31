@@ -32,3 +32,4 @@ spring.jpa.properties.hibernate.cache.use_query_cache=false
 # 로깅 설정
 logging.level.org.hibernate=ERROR
 logging.level.org.springframework=ERROR
+logging.level.org.springframework.validation=INFO
