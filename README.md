@@ -32,6 +32,18 @@ If you find any **bugs**, **security issues**, or have any **suggestions for imp
       │ └─com
       │     └─kanduit
       │         └─sso
+      │             ├─application
+      │             │   ├─dto
+      │             │   │   ├─BaseResponseDTO
+      │             │   │   ├─DataResponseDTO
+      │             │   │   └─ErrorResponseDTO
+      │             │   └─enums
+      │             │       └─ApiStatus
+      │             ├─domain
+      │             │   └─factory
+      │             │       └─ResponseFactory
+      │             ├─utils
+      │             │   └─ResponseUtil
       │             └─KanduitSsoGatewayApplication
       └─resources
         │   └─configs
