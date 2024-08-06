@@ -4,6 +4,7 @@ import com.kanduit.sso.application.dto.BaseResponseDTO;
 import com.kanduit.sso.application.dto.DataResponseDTO;
 import com.kanduit.sso.application.dto.ErrorResponseDTO;
 import com.kanduit.sso.application.enums.ApiStatus;
+import com.kanduit.sso.exception.ApiExceptionBody;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -15,8 +16,8 @@ public class ResponseFactory {
         return DataResponseDTO.of(extractEndpoint(request), apiStatus, data);
     }
 
-    public <E> ErrorResponseDTO<E> createErrorResponse(@NonNull WebRequest request, @NonNull ApiStatus apiStatus, @NonNull E error) {
-        return ErrorResponseDTO.of(extractEndpoint(request), apiStatus, error);
+    public ErrorResponseDTO createErrorResponse(@NonNull WebRequest request, @NonNull ApiExceptionBody apiExceptionBody) {
+        return ErrorResponseDTO.of(extractEndpoint(request), apiExceptionBody.getApiError().getApiStatus(), apiExceptionBody);
     }
 
     public BaseResponseDTO createSimpleResponse(

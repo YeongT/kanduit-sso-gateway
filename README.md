@@ -38,10 +38,16 @@ If you find any **bugs**, **security issues**, or have any **suggestions for imp
       │             │   │   ├─DataResponseDTO
       │             │   │   └─ErrorResponseDTO
       │             │   └─enums
+      │             │       ├─ApiError
       │             │       └─ApiStatus
       │             ├─domain
       │             │   └─factory
       │             │       └─ResponseFactory
+      │             ├─exception
+      │             │   ├─ApiExceptionBody
+      │             │   ├─ApiExceptionFactory
+      │             │   ├─ApiExceptionHandler
+      │             │   └─ApiException
       │             ├─utils
       │             │   └─ResponseUtil
       │             └─KanduitSsoGatewayApplication

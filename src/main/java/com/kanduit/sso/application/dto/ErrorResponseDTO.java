@@ -1,21 +1,21 @@
 package com.kanduit.sso.application.dto;
 
 import com.kanduit.sso.application.enums.ApiStatus;
+import com.kanduit.sso.exception.ApiExceptionBody;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
-public class ErrorResponseDTO<E>  extends BaseResponseDTO {
+public class ErrorResponseDTO extends BaseResponseDTO {
     @NonNull
-    // TODO: Specify the type of error details or create a dedicated error class to encapsulate error information
-    private final E error;
+    private final ApiExceptionBody error;
 
-    private ErrorResponseDTO(@NonNull String endpoint, @NonNull ApiStatus apiStatus, @NonNull E error) {
+    public ErrorResponseDTO(@NonNull String endpoint, @NonNull ApiStatus apiStatus, @NonNull ApiExceptionBody apiExceptionBody) {
         super(endpoint, apiStatus);
-        this.error = error;
+        this.error = apiExceptionBody;
     }
 
-    public static <T> ErrorResponseDTO<T> of(@NonNull String endpoint, @NonNull ApiStatus status, @NonNull T data) {
-        return new ErrorResponseDTO<>(endpoint, status, data);
+    public static ErrorResponseDTO of(@NonNull String endpoint, @NonNull ApiStatus apiStatus, @NonNull ApiExceptionBody apiExceptionBody) {
+        return new ErrorResponseDTO(endpoint, apiStatus, apiExceptionBody);
     }
 }

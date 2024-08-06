@@ -12,6 +12,9 @@ public enum ApiStatus {
     SUCCESS(HttpStatus.OK),
 
     // server
+    ACCESS_DENIED(HttpStatus.FORBIDDEN),
+    BAD_REQUEST(HttpStatus.BAD_REQUEST),
+    NOT_FOUND(HttpStatus.NOT_FOUND),
     UNKNOWN_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR);
 
     @NonNull
