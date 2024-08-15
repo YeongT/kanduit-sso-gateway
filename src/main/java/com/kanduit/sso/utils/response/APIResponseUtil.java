@@ -12,7 +12,7 @@ public abstract class APIResponseUtil {
         return new ResponseEntity<>(body, body.getStatus().httpStatus());
     }
 
-    public static ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createErrorResponse(@NonNull WebRequest request, @NonNull ResponseFactory responseFactory, @NonNull APIExceptionBody errorBody) {
-        return createResponse(responseFactory.createErrorBody(request, errorBody.getResponseStatus(), errorBody));
+    public static ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createErrorResponse(@NonNull WebRequest request, @NonNull ResponseFactory responseFactory, @NonNull APIExceptionBody exceptionBody) {
+        return createResponse(responseFactory.createErrorBody(request, exceptionBody.getResponseStatus(), exceptionBody));
     }
 }
