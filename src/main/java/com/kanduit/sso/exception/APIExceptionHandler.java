@@ -1,0 +1,35 @@
+package com.kanduit.sso.exception;
+
+import com.kanduit.sso.dto.response.StandardResponseDTO;
+import com.kanduit.sso.utils.response.APIResponseUtil;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+
+@ControllerAdvice
+public class APIExceptionHandler {
+    @NonNull
+    private final APIResponseUtil apiResponseUtil;
+
+    @NonNull
+    private final APIExceptionFactory exceptionFactory;
+
+    @Autowired
+    public APIExceptionHandler(@NonNull APIResponseUtil apiResponseUtil, @NonNull APIExceptionFactory exceptionFactory) {
+        this.apiResponseUtil = apiResponseUtil;
+        this.exceptionFactory = exceptionFactory;
+    }
+
+    @ExceptionHandler(APIException.class)
+    public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleCustomException(WebRequest request, APIException exception) {
+        return apiResponseUtil.createErrorResponse(request, exception.getBody());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleGlobalExceptions(WebRequest request, Exception exception) {
+        return apiResponseUtil.createErrorResponse(request, exceptionFactory.convertToAPIException(exception).getBody());
+    }
+}
