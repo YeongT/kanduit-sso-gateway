@@ -24,7 +24,7 @@ public class ResponseFactory {
     }
 
     // Create a response body with custom option
-    public <D, E> StandardResponseDTO<D, E> createCustomBody(@NonNull WebRequest request, @NonNull APIResponseStatus status, D data, E error) {
+    private <D, E> StandardResponseDTO<D, E> createCustomBody(@NonNull WebRequest request, @NonNull APIResponseStatus status, D data, E error) {
         return new StandardResponseDTO<D, E>(request, status) {
             public StandardResponseDTO<D, E> create(D data, E error) {
                 this.setData(data);
