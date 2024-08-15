@@ -27,6 +27,6 @@ public class APIExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleGlobalExceptions(WebRequest request, Exception exception) {
-        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionFactory.convertToAPIException(exception).getBody());
+        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionFactory.convertToAPIException(exception, null).getBody());
     }
 }

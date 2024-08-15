@@ -8,6 +8,7 @@ import lombok.NonNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class APIExceptionBody {
@@ -24,10 +25,10 @@ public class APIExceptionBody {
     @NonNull
     private final StackTraceElement[] stackTrace;
 
-    public APIExceptionBody(@NonNull APIResponseStatus responseStatus, @NonNull APIException exception) {
+    public APIExceptionBody(@NonNull APIResponseStatus responseStatus, @NonNull APIException exception, ArrayList<String> comments) {
         this.responseStatus = responseStatus;
         this.cause = exception.getMessage();
-        this.comments = new ArrayList<>();
+        this.comments = Optional.ofNullable(comments).orElseGet(ArrayList::new);
         this.stackTrace = parseStackTrace(exception.getStackTrace());
     }
 
