@@ -7,7 +7,6 @@ import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -20,7 +19,7 @@ public class APIExceptionBody {
     private final String cause;
 
     @NonNull
-    private final List<String> comments;
+    private final ArrayList<String> comments;
 
     @NonNull
     private final StackTraceElement[] stackTrace;
