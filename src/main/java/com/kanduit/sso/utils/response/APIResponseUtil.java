@@ -9,8 +9,6 @@ import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.ArrayList;
-
 public abstract class APIResponseUtil {
     public static <D, E> ResponseEntity<StandardResponseDTO<D, E>> createResponse(@NonNull StandardResponseDTO<D, E> body) {
         return new ResponseEntity<>(body, body.getStatus().httpStatus());
@@ -24,8 +22,7 @@ public abstract class APIResponseUtil {
             @NonNull WebRequest request,
             @NonNull ResponseFactory responseFactory,
             @NonNull APIExceptionFactory exceptionFactory,
-            @NonNull APIResponseStatus responseStatus,
-            ArrayList<String> comments) {
-        return createResponse(responseFactory.createErrorBody(request, responseStatus, exceptionFactory.createException(responseStatus, comments).getBody()));
+            @NonNull APIResponseStatus responseStatus) {
+        return createResponse(responseFactory.createErrorBody(request, responseStatus, exceptionFactory.createException(responseStatus).getBody()));
     }
 }
