@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kanduit.sso.dto.response.APIResponseStatus;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,15 +14,13 @@ public class APIExceptionBody {
     @JsonIgnore
     @NonNull
     private final APIResponseStatus responseStatus;
-
-    @NonNull
-    private final String cause;
-
     @NonNull
     private final ArrayList<String> comments;
-
     @NonNull
     private final StackTraceElement[] stackTrace;
+    @NonNull
+    @Setter
+    private String cause;
 
     public APIExceptionBody(@NonNull APIResponseStatus responseStatus, @NonNull APIException exception) {
         this.responseStatus = responseStatus;
