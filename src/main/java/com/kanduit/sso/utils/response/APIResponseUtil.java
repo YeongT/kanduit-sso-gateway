@@ -18,7 +18,7 @@ public abstract class APIResponseUtil {
         return createResponse(responseFactory.createErrorBody(request, exceptionBody.getResponseStatus(), exceptionBody));
     }
 
-    public static ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createErrorResponse(
+    public static ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createSimpleErrorResponse(
             @NonNull WebRequest request,
             @NonNull ResponseFactory responseFactory,
             @NonNull APIExceptionFactory exceptionFactory,
