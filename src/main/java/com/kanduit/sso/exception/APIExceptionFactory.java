@@ -17,4 +17,9 @@ public class APIExceptionFactory {
         };
     }
 
+    public APIException convertToAPIException(@NonNull Exception exception, @NonNull APIResponseStatus status) {
+        return new APIException(status, exception) {
+        };
+    }
+
 }
