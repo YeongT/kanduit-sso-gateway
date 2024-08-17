@@ -13,6 +13,9 @@ public enum APIResponseStatus {
     FAILURE(HttpStatus.BAD_REQUEST),
 
     // server
+    ACCESS_DENIED(HttpStatus.FORBIDDEN),
+    TIMEOUT(HttpStatus.GATEWAY_TIMEOUT),
+    NOT_FOUND(HttpStatus.NOT_FOUND),
     UNKNOWN_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR);
 
     @NonNull

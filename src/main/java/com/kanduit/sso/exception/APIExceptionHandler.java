@@ -1,5 +1,6 @@
 package com.kanduit.sso.exception;
 
+import com.kanduit.sso.dto.response.APIResponseStatus;
 import com.kanduit.sso.dto.response.StandardResponseDTO;
 import com.kanduit.sso.utils.response.APIResponseUtil;
 import lombok.NonNull;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
 public class APIExceptionHandler {
@@ -26,6 +28,11 @@ public class APIExceptionHandler {
     @ExceptionHandler(APIException.class)
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleCustomException(WebRequest request, APIException exception) {
         return apiResponseUtil.createErrorResponse(request, exception.getBody());
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleNoResourceFoundException(WebRequest request, NoResourceFoundException exception) {
+        return apiResponseUtil.createErrorResponse(request, exceptionFactory.convertToAPIException(exception, APIResponseStatus.NOT_FOUND).getBody());
     }
 
     @ExceptionHandler(Exception.class)
