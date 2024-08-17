@@ -37,4 +37,13 @@ public class APIExceptionBody {
         }
         return stackTrace;
     }
+
+    public APIExceptionBody addComment(@NonNull String comment) {
+        this.comments.add(comment);
+        return this;
+    }
+
+    public ArrayList<String> getComments() {
+        return new ArrayList<>(comments);
+    }
 }
