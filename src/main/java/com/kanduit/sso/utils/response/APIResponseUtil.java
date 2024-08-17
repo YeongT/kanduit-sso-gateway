@@ -1,8 +1,8 @@
 package com.kanduit.sso.utils.response;
 
 import com.kanduit.sso.domain.factory.ResponseFactory;
-import com.kanduit.sso.dto.response.APIResponseStatus;
 import com.kanduit.sso.dto.response.StandardResponseDTO;
+import com.kanduit.sso.exception.APIExceptionBody;
 import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
@@ -12,7 +12,7 @@ public abstract class APIResponseUtil {
         return new ResponseEntity<>(body, body.getStatus().httpStatus());
     }
 
-    public static <E> ResponseEntity<StandardResponseDTO<Void, E>> createErrorResponse(@NonNull WebRequest request, @NonNull APIResponseStatus status, @NonNull ResponseFactory responseFactory, @NonNull E error) {
-        return createResponse(responseFactory.createErrorBody(request, status, error));
+    public static ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createErrorResponse(@NonNull WebRequest request, @NonNull ResponseFactory responseFactory, @NonNull APIExceptionBody exceptionBody) {
+        return createResponse(responseFactory.createErrorBody(request, exceptionBody.getResponseStatus(), exceptionBody));
     }
 }

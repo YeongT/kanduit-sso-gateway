@@ -2,6 +2,7 @@ package com.kanduit.sso.domain.factory;
 
 import com.kanduit.sso.dto.response.APIResponseStatus;
 import com.kanduit.sso.dto.response.StandardResponseDTO;
+import com.kanduit.sso.exception.APIExceptionBody;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
@@ -19,8 +20,8 @@ public class ResponseFactory {
     }
 
     // Create a response body with given status and error
-    public <E> StandardResponseDTO<Void, E> createErrorBody(@NonNull WebRequest request, @NonNull APIResponseStatus status, @NonNull E error) {
-        return createCustomBody(request, status, null, error);
+    public StandardResponseDTO<Void, APIExceptionBody> createErrorBody(@NonNull WebRequest request, @NonNull APIResponseStatus status, @NonNull APIExceptionBody errorBody) {
+        return createCustomBody(request, status, null, errorBody);
     }
 
     // Create a response body with custom option
@@ -33,5 +34,4 @@ public class ResponseFactory {
             }
         }.create(data, error);
     }
-
 }
