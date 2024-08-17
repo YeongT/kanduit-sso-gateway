@@ -12,6 +12,9 @@ public enum APIResponseStatus {
     SUCCESS(HttpStatus.OK),
     FAILURE(HttpStatus.BAD_REQUEST),
 
+    // validation
+    FIELD_VALIDATION_FAILED(HttpStatus.BAD_REQUEST),
+
     // server
     ACCESS_DENIED(HttpStatus.FORBIDDEN),
     TIMEOUT(HttpStatus.GATEWAY_TIMEOUT),
