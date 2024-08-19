@@ -6,7 +6,8 @@ build/
 !**/src/test/**/build/
 
 ### Secret ###
-database.properties
+**/resources/configs/*.properties
+**/resources/configs/**/*.properties
 
 ### STS ###
 .apt_generated
