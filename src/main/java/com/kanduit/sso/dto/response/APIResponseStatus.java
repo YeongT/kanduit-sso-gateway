@@ -12,6 +12,11 @@ public enum APIResponseStatus {
     SUCCESS(HttpStatus.OK),
     FAILURE(HttpStatus.BAD_REQUEST),
 
+    // mail
+    MAIL_SEND_SUCCESS(HttpStatus.OK),
+    MAIL_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR),
+    MAIL_TEMPLATE_CREATE_FAILED(HttpStatus.BAD_REQUEST),
+    
     // validation
     FIELD_VALIDATION_FAILED(HttpStatus.BAD_REQUEST),
 
