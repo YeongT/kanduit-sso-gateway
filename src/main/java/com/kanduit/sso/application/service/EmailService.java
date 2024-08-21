@@ -1,4 +1,4 @@
-package com.kanduit.sso.domain.service;
+package com.kanduit.sso.application.service;
 
 import com.kanduit.sso.domain.model.email.EmailTemplateParameter;
 import com.kanduit.sso.dto.email.EmailSendRequest;
