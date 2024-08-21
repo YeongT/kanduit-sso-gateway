@@ -2,6 +2,7 @@ package com.kanduit.sso.domain.model.email;
 
 import com.kanduit.sso.dto.response.APIResponseStatus;
 import com.kanduit.sso.exception.APIException;
+import jakarta.validation.constraints.NotBlank;
 import lombok.NonNull;
 import org.springframework.core.io.ClassPathResource;
 
@@ -16,15 +17,19 @@ public interface EmailTemplate {
     Boolean getIsMailForAdvertising();
 
     @NonNull
+    @NotBlank
     String getSenderAddress();
 
     @NonNull
+    @NotBlank
     String getSenderName();
 
     @NonNull
+    @NotBlank
     String getSubject();
 
     @NonNull
+    @NotBlank
     String getTemplateContent();
 
     default String readTemplateFile(@NonNull String templateFilePath) {

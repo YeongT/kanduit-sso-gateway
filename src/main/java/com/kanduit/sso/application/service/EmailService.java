@@ -11,14 +11,17 @@ import com.nbp.ncp.nes.auth.PropertiesFileCredentialsProvider;
 import com.nbp.ncp.nes.marshaller.JsonMarshaller;
 import com.nbp.ncp.nes.model.EmailSendRequestRecipients;
 import com.nbp.ncp.nes.model.EmailSendResponse;
+import jakarta.validation.Valid;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.io.IOException;
 
 @Service
+@Validated
 public class EmailService {
     @NonNull
     private static final String X_NCP_LANG = "ko-KR";
@@ -40,7 +43,8 @@ public class EmailService {
         return new EmailSendRequestRecipients().address(parameter.getRecipientAddress()).name(parameter.getRecipientName());
     }
 
-    public <T extends EmailTemplateParameter> ApiResponse<EmailSendResponse> send(@NonNull EmailSendRequest requestType, @NonNull T parameter) throws APIException {
+    public <T extends EmailTemplateParameter> ApiResponse<EmailSendResponse> send(
+            @Valid @NonNull EmailSendRequest requestType, @Valid @NonNull T parameter) throws APIException {
         return emailAPI.mailsPost(new com.nbp.ncp.nes.model.EmailSendRequest()
                         .advertising(requestType.getTemplate().getIsMailForAdvertising())
                         .addRecipientsItem(createRecipient(parameter))

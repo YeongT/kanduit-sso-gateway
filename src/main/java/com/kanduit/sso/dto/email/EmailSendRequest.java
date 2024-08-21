@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kanduit.sso.domain.model.email.EmailTemplate;
 import com.kanduit.sso.domain.model.email.sample.SampleEmailTemplate;
 import com.kanduit.sso.dto.response.APIResponseStatus;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -26,6 +27,7 @@ public enum EmailSendRequest {
     private final APIResponseStatus responseStatusOnSuccess;
 
     @NonNull
+    @Valid
     private final EmailTemplate template;
 
     EmailSendRequest(@NonNull APIResponseStatus responseStatus, @NonNull EmailTemplate template) {
