@@ -33,7 +33,6 @@ public class APIResponseUtil {
 
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createSimpleErrorResponse(
             @NonNull WebRequest request,
-            @NonNull ResponseFactory responseFactory,
             @NonNull APIResponseStatus responseStatus) {
         return createResponse(responseFactory.createErrorBody(request, responseStatus, exceptionFactory.createException(responseStatus).getBody()));
     }
