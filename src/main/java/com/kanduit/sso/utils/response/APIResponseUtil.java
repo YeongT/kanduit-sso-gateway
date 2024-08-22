@@ -6,22 +6,35 @@ import com.kanduit.sso.dto.response.StandardResponseDTO;
 import com.kanduit.sso.exception.APIExceptionBody;
 import com.kanduit.sso.exception.APIExceptionFactory;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
 
-public abstract class APIResponseUtil {
-    public static <D, E> ResponseEntity<StandardResponseDTO<D, E>> createResponse(@NonNull StandardResponseDTO<D, E> body) {
+@Component
+public class APIResponseUtil {
+    @NonNull
+    private final ResponseFactory responseFactory;
+
+    @NonNull
+    private final APIExceptionFactory exceptionFactory;
+
+    @Autowired
+    public APIResponseUtil(@NonNull ResponseFactory responseFactory, @NonNull APIExceptionFactory exceptionFactory) {
+        this.responseFactory = responseFactory;
+        this.exceptionFactory = exceptionFactory;
+    }
+
+    public <D, E> ResponseEntity<StandardResponseDTO<D, E>> createResponse(@NonNull StandardResponseDTO<D, E> body) {
         return new ResponseEntity<>(body, body.getStatus().httpStatus());
     }
 
-    public static ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createErrorResponse(@NonNull WebRequest request, @NonNull ResponseFactory responseFactory, @NonNull APIExceptionBody exceptionBody) {
+    public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createErrorResponse(@NonNull WebRequest request, @NonNull APIExceptionBody exceptionBody) {
         return createResponse(responseFactory.createErrorBody(request, exceptionBody.getResponseStatus(), exceptionBody));
     }
 
-    public static ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createSimpleErrorResponse(
+    public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> createSimpleErrorResponse(
             @NonNull WebRequest request,
-            @NonNull ResponseFactory responseFactory,
-            @NonNull APIExceptionFactory exceptionFactory,
             @NonNull APIResponseStatus responseStatus) {
         return createResponse(responseFactory.createErrorBody(request, responseStatus, exceptionFactory.createException(responseStatus).getBody()));
     }

@@ -1,6 +1,5 @@
 package com.kanduit.sso.exception;
 
-import com.kanduit.sso.domain.factory.ResponseFactory;
 import com.kanduit.sso.dto.response.APIResponseStatus;
 import com.kanduit.sso.dto.response.StandardResponseDTO;
 import com.kanduit.sso.utils.response.APIResponseUtil;
@@ -21,27 +20,27 @@ import java.util.Arrays;
 @ControllerAdvice
 public class APIExceptionHandler {
     private final APIExceptionFactory exceptionFactory;
-    private final ResponseFactory responseFactory;
+    private final APIResponseUtil apiResponseUtil;
 
     @Autowired
-    public APIExceptionHandler(APIExceptionFactory exceptionFactory, ResponseFactory responseFactory) {
+    public APIExceptionHandler(APIExceptionFactory exceptionFactory, APIResponseUtil apiResponseUtil) {
         this.exceptionFactory = exceptionFactory;
-        this.responseFactory = responseFactory;
+        this.apiResponseUtil = apiResponseUtil;
     }
 
     @ExceptionHandler(APIException.class)
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleCustomException(WebRequest request, APIException exception) {
-        return APIResponseUtil.createErrorResponse(request, responseFactory, exception.getBody());
+        return apiResponseUtil.createErrorResponse(request, exception.getBody());
     }
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleApiException(WebRequest request, ApiException exception) {
-        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionFactory.convertToAPIException(exception, APIResponseStatus.MAIL_SEND_FAILED).getBody());
+        return apiResponseUtil.createErrorResponse(request, exceptionFactory.convertToAPIException(exception, APIResponseStatus.MAIL_SEND_FAILED).getBody());
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleNoResourceFoundException(WebRequest request, NoResourceFoundException exception) {
-        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionFactory.convertToAPIException(exception, APIResponseStatus.NOT_FOUND).getBody());
+        return apiResponseUtil.createErrorResponse(request, exceptionFactory.convertToAPIException(exception, APIResponseStatus.NOT_FOUND).getBody());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -50,7 +49,7 @@ public class APIExceptionHandler {
         for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
             exceptionBody.addComment("Field '%s.%s' failed validation: %s".formatted(violation.getRootBeanClass().getSimpleName(), violation.getPropertyPath(), violation.getMessage()));
         }
-        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionBody);
+        return apiResponseUtil.createErrorResponse(request, exceptionBody);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -67,11 +66,11 @@ public class APIExceptionHandler {
                             )
             );
         }
-        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionBody);
+        return apiResponseUtil.createErrorResponse(request, exceptionBody);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleGlobalExceptions(WebRequest request, Exception exception) {
-        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionFactory.convertToAPIException(exception).getBody());
+        return apiResponseUtil.createErrorResponse(request, exceptionFactory.convertToAPIException(exception).getBody());
     }
 }
