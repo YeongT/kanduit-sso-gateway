@@ -1,15 +1,16 @@
 package com.kanduit.sso.exception;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.kanduit.sso.dto.response.APIResponseStatus;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 @Getter
+@JsonPropertyOrder({"cause"})
 public class APIExceptionBody {
     @JsonIgnore
     @NonNull
@@ -19,19 +20,18 @@ public class APIExceptionBody {
     @NonNull
     private final StackTraceElement[] stackTrace;
     @NonNull
-    @Setter
     private String cause;
 
     public APIExceptionBody(@NonNull APIResponseStatus responseStatus, @NonNull APIException exception) {
         this.responseStatus = responseStatus;
         this.cause = exception.getMessage();
         this.comments = new ArrayList<>();
-        this.stackTrace = parseStackTrace(exception.getStackTrace());
+        this.stackTrace = parseStackTrace(exception.getCause().getStackTrace());
     }
 
     private StackTraceElement[] parseStackTrace(@NonNull StackTraceElement[] stackTrace) {
         for (int index = 0; index < stackTrace.length; index++) {
-            if ("java.base".equals(stackTrace[index].getModuleName())) {
+            if ("service".equals(stackTrace[index].getMethodName()) && "org.springframework.web.servlet.FrameworkServlet".equals(stackTrace[index].getClassName())) {
                 return Arrays.copyOfRange(stackTrace, 0, index);
             }
         }
@@ -40,6 +40,11 @@ public class APIExceptionBody {
 
     public APIExceptionBody addComment(@NonNull String comment) {
         this.comments.add(comment);
+        return this;
+    }
+
+    public APIExceptionBody setCause(String cause) {
+        this.cause = cause;
         return this;
     }
 
