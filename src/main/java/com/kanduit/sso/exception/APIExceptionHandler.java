@@ -5,6 +5,8 @@ import com.kanduit.sso.dto.response.APIResponseStatus;
 import com.kanduit.sso.dto.response.StandardResponseDTO;
 import com.kanduit.sso.utils.response.APIResponseUtil;
 import com.nbp.ncp.nes.exception.ApiException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -40,6 +42,15 @@ public class APIExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleNoResourceFoundException(WebRequest request, NoResourceFoundException exception) {
         return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionFactory.convertToAPIException(exception, APIResponseStatus.NOT_FOUND).getBody());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleConstraintViolationException(WebRequest request, ConstraintViolationException exception) {
+        APIExceptionBody exceptionBody = exceptionFactory.createException(APIResponseStatus.FIELD_VALIDATION_FAILED).getBody();
+        for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
+            exceptionBody.addComment("Field '%s.%s' failed validation: %s".formatted(violation.getRootBeanClass().getSimpleName(), violation.getPropertyPath(), violation.getMessage()));
+        }
+        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionBody);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
