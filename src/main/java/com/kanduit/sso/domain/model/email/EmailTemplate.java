@@ -1,6 +1,7 @@
 package com.kanduit.sso.domain.model.email;
 
 import com.kanduit.sso.application.context.ApplicationContextProvider;
+import com.kanduit.sso.config.APIConfiguration;
 import com.kanduit.sso.domain.enums.Favicon;
 import com.kanduit.sso.domain.service.FaviconService;
 import com.kanduit.sso.dto.response.APIResponseStatus;
@@ -45,7 +46,9 @@ public interface EmailTemplate {
             while ((line = reader.readLine()) != null) {
                 contentBuilder.append(line).append("\n");
             }
-            return contentBuilder.toString().replace("{{logo}}", ApplicationContextProvider.getBean(FaviconService.class).getBase64EncodedFavicon(Favicon.FAVICON_96));
+            return contentBuilder.toString()
+                    .replace("{{logo}}", ApplicationContextProvider.getBean(FaviconService.class).getBase64EncodedFavicon(Favicon.FAVICON_96))
+                    .replace("{{corp_url}}", ApplicationContextProvider.getBean(APIConfiguration.class).getCorpUrl());
         } catch (IOException e) {
             throw new RuntimeException("error occurred while reading template file", e);
         }

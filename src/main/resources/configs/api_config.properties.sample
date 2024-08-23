@@ -1,0 +1,3 @@
+api.port=
+api.host=your-domain
+api.deployment=[localhost|development|production|heroku]
