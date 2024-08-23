@@ -52,6 +52,8 @@ If you find any **bugs**, **security issues**, or have any **suggestions for imp
       │             │   └─ResponseUtil
       │             └─KanduitSsoGatewayApplication
       └─resources
+        │   ├─favicons
+        │   │   └─**favicons
         │   └─configs
         │       └─database
         │           └─mariadb.properties
