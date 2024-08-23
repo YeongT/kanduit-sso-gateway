@@ -41,8 +41,12 @@ If you find any **bugs**, **security issues**, or have any **suggestions for imp
       │             │       ├─ApiError
       │             │       └─ApiStatus
       │             ├─domain
-      │             │   └─factory
-      │             │       └─ResponseFactory
+      │             │   ├─enums
+      │             │   │   └─**domain-enums
+      │             │   ├─factory
+      │             │   │   └─ResponseFactory
+      │             │   └─service
+      │             │       └─FaviconService
       │             ├─exception
       │             │   ├─ApiExceptionBody
       │             │   ├─ApiExceptionFactory
