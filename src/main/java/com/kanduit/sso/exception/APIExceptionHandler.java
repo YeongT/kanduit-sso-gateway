@@ -4,6 +4,7 @@ import com.kanduit.sso.domain.factory.ResponseFactory;
 import com.kanduit.sso.dto.response.APIResponseStatus;
 import com.kanduit.sso.dto.response.StandardResponseDTO;
 import com.kanduit.sso.utils.response.APIResponseUtil;
+import com.nbp.ncp.nes.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -29,6 +30,11 @@ public class APIExceptionHandler {
     @ExceptionHandler(APIException.class)
     public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleCustomException(WebRequest request, APIException exception) {
         return APIResponseUtil.createErrorResponse(request, responseFactory, exception.getBody());
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<StandardResponseDTO<Void, APIExceptionBody>> handleApiException(WebRequest request, ApiException exception) {
+        return APIResponseUtil.createErrorResponse(request, responseFactory, exceptionFactory.convertToAPIException(exception, APIResponseStatus.MAIL_SEND_FAILED).getBody());
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
